@@ -1,0 +1,30 @@
+$main: red;
+
+.app {
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+}
+
+.app__content {
+  margin: auto;
+  border-radius: 10px;
+  border: #9c6512 4px solid;
+  background: radial-gradient(#cbad86, #b89666, #d7ae72);
+  padding: 16px;
+}
+
+.app__button-bar {
+  margin-top: 16px;
+  text-align: right;
+
+  > button {
+    margin-left: 8px;
+    padding: 6px;
+    background: repeating-linear-gradient(45deg, #bababa, #e4e4e4);
+    font-size: 15px;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+  }
+}

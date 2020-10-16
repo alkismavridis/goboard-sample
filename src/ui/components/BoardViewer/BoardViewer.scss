@@ -1,0 +1,31 @@
+.board-viewer {
+  display: grid;
+  grid-gap: 8px;
+}
+
+.board-viewer__cell {
+  width: 20px;
+  height: 20px;
+  border: #4b4b4b 2px solid;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &[data-cell-value="0"] {
+    background-color: #ffffff;
+  }
+
+  &[data-cell-value="1"] {
+    background-color: black;
+  }
+}
+
+// hover effects
+.board-viewer[data-selected-color="0"] .board-viewer__cell:not([data-cell-value="0"]):hover {
+  background-color: #e5e5e5;
+}
+
+.board-viewer[data-selected-color="1"] .board-viewer__cell:not([data-cell-value="1"]):hover {
+  background-color: #4b4b4b;
+}
+

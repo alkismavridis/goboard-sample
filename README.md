@@ -1,44 +1,47 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Architecture
 
-## Available Scripts
+I separated the app into a business_rules/ and a ui/ modules.
 
-In the project directory, you can run:
+Ui depends on the business rules, but the business_rules do not depend on any way in the UI.
 
-### `npm start`
+This means that if in one year, a new, super-cool UI framework is launched, and we want to switch to it,
+we would't have to change a single line of code in the business_rules package.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+We could even turn this code into a nodejs app and simply replace the ui module with an other, cli-based one.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
+### State management
+The state model is defined on the business_rules module.
+It is initialized and stored in the UI module (to get advantage of the react magic).
+The rules on how to operate on that state lie of course in the business rules module.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The UI implement almost zero logic (so that it can be easily refactored, upgraded or abandoned for another framework).
 
-### `npm run build`
+### Usecases
+The business rules specify a list of the application usecases.
+Each usecase is specified in its own file and exposes a top-level function (or more than one - for unit testing purposes only).
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Usecases are of course stateless.
+They get the necessary parameters as input, return their results.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Important note: usecases treat incomming parameters as immutable. They do NOT act on them.
+Instead, they are cloning them and return the updated version.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### React notes
+I did not use redux, context api or similar voodoo. The size of the project did not require that.
+I worked with the good-old props.
 
-### `npm run eject`
+### Scss
+I used block-element-modifier naming conventions.
+I tried to reuse some styles using mixing and added some transitions to make the ui a bit smoother. 
+I used some radial gradients to make the board look "wooden". I am not sure it is very convincing :D
+I would probably use a nice background image in a real project.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Usage
+First of all, "npm install"
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To start the dev server hit "npm run start" and open "http://localhost:3000/" to access the UI.
+Run the tests with: "npm run test".
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+That's all.
+I hope you have fun with it!
